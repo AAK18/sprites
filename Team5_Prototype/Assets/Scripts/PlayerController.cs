@@ -10,21 +10,38 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D control;
     public float jumpforce;
     bool ground;
+    bool faceRight = true;
 
     void Start()
     {
         control = GetComponent<Rigidbody2D>();
-        speed = 5;
+        
     }
 
     
 
-    void FixedUpdate()
+    void Update()
+    {
+
+        Movement();
+    }
+
+    void Movement()
     {
         float sideMovement = Input.GetAxis("Horizontal");
         control.velocity = new Vector2(sideMovement * speed, control.velocity.y);
-        Jump();
+        
+            Jump();
+        
 
+        if(sideMovement < 0 && faceRight == true)
+        {
+            flip();
+        }
+        else if (sideMovement > 0 && faceRight == false)
+        {
+            flip();
+        }
     }
 
     void Jump()
@@ -45,4 +62,13 @@ public class PlayerController : MonoBehaviour
             
         }
     }
+
+    void flip()
+    {
+        faceRight = !faceRight;
+        Vector2 temp = gameObject.transform.localScale;
+        temp.x = temp.x * -1;
+        gameObject.transform.localScale = temp;
+    }
 }
+
