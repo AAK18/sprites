@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
 
         if (inZone == true && isHiding == false)
         {
-            if (Input.GetKeyDown("mouse 0"))
+            if (Input.GetKeyDown("w"))
             {
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 isHiding = true;
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
             gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
             gameObject.transform.position = new Vector3(3.95f, 2.32f, 0.0f);
 
-            if (Input.GetKeyDown("mouse 0"))
+            if (Input.GetKeyDown("w"))
             {
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
                 isHiding = false;

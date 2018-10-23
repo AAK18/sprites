@@ -32,16 +32,18 @@ public class Health : MonoBehaviour {
             {
                 isAlive = false;
                 gameObject.transform.Rotate(0, 0, 90);
-                gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                float t1, t2;
+                t1 = gameObject.transform.position.x;
+                t2 = gameObject.transform.position.y - 0.5f;
+                gameObject.transform.position = new Vector3(t1, t2, gameObject.transform.position.z);
+                gameObject.GetComponent<Rigidbody2D>().isKinematic = true;
 
             }
         }
         else if(!isAlive)
         {
             gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
-            list = GameObject.FindGameObjectsWithTag("Death");
-            list[0].SetActive(true);
-            list[1].SetActive(true);
+            
             if(Input.GetKeyDown("r"))
             {
                 respawn();
@@ -56,6 +58,10 @@ public class Health : MonoBehaviour {
 
     void respawn()
     {
-
+        fhealth = 100;
+        isAlive = true;
+        gameObject.transform.Rotate(0, 0, -90);
+        gameObject.transform.position = new Vector3(1.73f, 1.74f, 0);
+        gameObject.GetComponent<Rigidbody2D>().isKinematic = false;
     }
 }

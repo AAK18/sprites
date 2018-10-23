@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+    public GameObject player;
     public float healthed, damage;
     bool hehide;
     bool ispress = false;
@@ -12,11 +13,13 @@ public class Enemy : MonoBehaviour {
     {
        
         damage = 1000;
+        player = GameObject.FindWithTag("Player");
 	}
 	
 	
 	void Update ()
     {
+        hehide = player.GetComponent<Health>().thishide;
         if (Input.GetKeyDown("p")) { ispress = true; }
         else if (Input.GetKeyDown("o")) { ispress = false;}
 
@@ -25,11 +28,17 @@ public class Enemy : MonoBehaviour {
             gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(-5, 0, 0);
         }
         else if (!ispress) { gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0); }
+
+        if(Input.GetKeyDown("r"))
+        {
+            gameObject.transform.position = new Vector3(16.76f, 2.99f, 0);
+            gameObject.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+        }
 	}
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        
+       
         if (other.gameObject.tag == "Player" && hehide == false)
         {
             hehide = other.gameObject.GetComponent<Health>().thishide;

@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PickupItem : MonoBehaviour {
 
-    public GameObject player;
+    public GameObject player,test;
     bool collected = false;
+    bool selected = false;
     float xs, ys;
 	
 	void Start ()
@@ -15,9 +16,11 @@ public class PickupItem : MonoBehaviour {
 
     void Update()
     {
+        test = GameObject.FindWithTag("Weapon");
+        selected = test.gameObject.GetComponent<PickupItem>().selected;
         // xs = player.transform.position.x + 0.277;
         //ys = player.transform.position.y + 0.062;
-        if (collected == true)
+        if (collected == true && selected == true)
         {
             if(player.GetComponent<PlayerController>().isHiding == true)
             {
@@ -58,6 +61,14 @@ public class PickupItem : MonoBehaviour {
                 }
 
             }
+
+
+           
+        }
+        else if(collected == true && selected == false)
+        {
+            gameObject.GetComponent<Collider2D>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
    
@@ -67,7 +78,14 @@ public class PickupItem : MonoBehaviour {
          {
                 gameObject.transform.position = other.transform.position;
                 collected = true;
+            selected = false;
+            test = GameObject.FindWithTag("Weapon");
+            test.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
     
+    void OnMouseDown()
+    {
+        selected = !selected;
+    }
 }
