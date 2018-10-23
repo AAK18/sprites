@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     bool ground;
     bool faceRight = true;
     public Animator animate;
+    public bool isHiding;
+    int collisionnum = 0;
+    public GameObject player;
+    bool inZone = false;
 
     void Start()
     {
@@ -24,7 +28,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Hiding();
         Movement();
+       
        
     }
 
@@ -59,12 +65,54 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Hiding") && collisionnum % 2 == 1)
+        {
+            inZone = false;
+            ++collisionnum;
+
+        }
+        else if (other.gameObject.CompareTag("Hiding") && collisionnum % 2 == 0)
+        {
+            inZone = true;
+            ++collisionnum;
+        }
+    }
+
     void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.CompareTag("Floor"))
         {
             ground = true;
             
+        }
+    }
+
+    void Hiding()
+    {
+
+        if (inZone == true && isHiding == false)
+        {
+            if (Input.GetKeyDown("mouse 0"))
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                isHiding = true;
+                gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+                gameObject.transform.position = new Vector3(3.95f, 2.32f, 0.0f);
+
+            }
+        }
+        else if (inZone == true && isHiding == true)
+        {
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+            gameObject.transform.position = new Vector3(3.95f, 2.32f, 0.0f);
+
+            if (Input.GetKeyDown("mouse 0"))
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                isHiding = false;
+            }
         }
     }
 

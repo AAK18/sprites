@@ -19,6 +19,14 @@ public class PickupItem : MonoBehaviour {
         //ys = player.transform.position.y + 0.062;
         if (collected == true)
         {
+            if(player.GetComponent<PlayerController>().isHiding == true)
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else if (player.GetComponent<PlayerController>().isHiding == false)
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            }
 
             Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>());
             if (player.transform.localScale.x > 0)

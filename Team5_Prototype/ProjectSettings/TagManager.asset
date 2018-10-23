@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Floor
   - ShowText
+  - Hiding
+  - enemy
+  - Death
   layers:
   - Default
   - TransparentFX
